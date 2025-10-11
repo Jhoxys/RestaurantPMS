@@ -1,0 +1,58 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+ 
+/*mi Style*/
+.contenedor-tabla {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+
+.fila-datos {
+    display: flex;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.encabezado {
+    font-weight: bold;
+
+    border-top: 1px solid #ddd;
+    border-bottom: 2px solid #aaa;
+}
+
+.col {
+    /* Ajusta el tamaño de cada columna aquí */
+    flex-basis: 33.33%;
+    text-align: center;
+}
+
+/* Puedes usar clases específicas para más control */
+.producto {
+    text-align: left;
+}
+
+.precio {
+    text-align: right;
+}

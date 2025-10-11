@@ -1,0 +1,904 @@
+﻿@using Microsoft.AspNetCore.Html
+
+@model List<Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    int pageIndex = (int)ViewData["PageIndex"]!;
+    int totalPages = (int)ViewData["TotalPages"]!;
+    string search = (string)ViewData["Search"]!;
+    var DisplayCategory = "none";
+
+    var idTableTemp = TempData["Id_Table"];
+
+    var orders = ViewBag.Orders as List<Order>;
+
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    // Script to activate the sidebar toggle
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("miFormulario");
+
+        // form.addEventListener("submit", function (e) {
+        //     e.preventDefault(); // 🔴 Esto previene el envío normal
+      
+
+
+        // });
+    });
+</script>
+<script>
+    let cont = 0;
+
+
+    function Arrow() {
+
+        let arrow = document.querySelector("#Arrows");
+        let category = document.querySelector("#Category");
+        let mesa = document.querySelector("#Mesa");
+
+        arrow.style.display = 'none';
+
+        category.style.display = 'none';
+
+        mesa.style.display = 'block';
+
+    }
+
+
+    function mesa(id) {
+
+        let arrow = document.querySelector("#Arrows");
+        let category = document.querySelector("#Category");
+        let mesa = document.querySelector("#Mesa");
+        let seletMesa = document.querySelector("#seletMesa");
+
+        seletMesa.innerHTML = "Mesa seleccionada: " + id;
+
+        cont++;
+        if (cont == 1) {
+
+            cont == 0;
+        }
+      
+        category.style.display = 'block';
+        arrow.style.display = 'block';
+        mesa.style.display = 'none';
+
+       // seletMesa.style.display = 'block';
+       //  const nuevaUrl = "?Id_Table=" + encodeURIComponent(id);
+       //  history.pushState(null, "", nuevaUrl);
+        sessionStorage.setItem("mesaId", id);
+
+    }
+        function sortTable(column) {
+            // optener la mesa
+
+
+        const params = new URLSearchParams(window.location.search);
+        const idTable = params.get("Id_Table");
+        const tablaSegunda = document.getElementById("Oder");
+
+            
+        window.location.href = "?search=" + column;
+
+    }
+
+
+        function addItem(boton) {
+
+
+        let mesa = "Mesa1"; // o como corresponda
+   
+        const filaOriginal =boton.closest("tr");
+        const filaUno = filaOriginal.cloneNode(true);
+
+
+            const tablaSegunda = document.getElementById("Oder");
+            const filaOriginalDos = boton.closest("tr");
+            const filaDos = filaOriginalDos.cloneNode(true);
+
+            //filaClonadaDos.cells[0].textContent = parseFloat(filaOriginalDos.cells[0].textContent) + 1;
+        const NameVal = filaOriginal.cells[1].textContent;
+        const preciVal = parseFloat(filaOriginal.cells[4].textContent);
+
+               // <input  id="id_Product" hidden />
+               //                                          <input id="id_table" hidden />
+
+
+
+        const IdMesa = sessionStorage.getItem("mesaId");
+        const idTable = document.querySelector("#id_table");
+        idTable.value = IdMesa;
+
+
+        // tablaSegunda.innerHTML += `
+                      
+        //                           <div class="fila-datos">
+        //                                     <span class="col producto">${NameVal}</span>
+        //                                     <span class="col mesa">${IdMesa}</span>
+        //                                     <span class="col precio">$${preciVal}</span>
+                                
+        //                        </div>
+                         
+        //                     `;
+
+
+                          // <th scope="row">${index}</th>
+                          //    <td><input class="form-control" name="BillingDto[${index}].CodeProduct" value="${CodeR}" readonly /></td>
+                          //     <td><input class="form-control" name="BillingDto[${index}].Name" value="${CNameR}" readonly /></td>
+                          //     <td><input class="form-control" name="BillingDto[${index}].Stock" value="${FStockR}" readonly /></td>
+                          //     <td><input class="form-control" name="BillingDto[${index}].Description" value="${FDesction}" readonly  /> </td>
+                          //     <td><input class="form-control" name="BillingDto[${index}].Quantitys"  value="${FQtyR}"  readonly  /></td>
+                          //     <td><input class="form-control" name="BillingDto[${index}].Price"  value="${FPriceR}"  readonly  /></td>
+                          //     <td><input class="form-control" id="ValAmount" name="BillingDto[${index}].amount"  value="${Famountval}" readonly  /></td>
+                          //     <td><button class="btn btn-danger text-capitalize active"  onclick="eliminarFila(this)">Eliminar</button></td>
+                          //     <td><input name="BillingDto[${index}].ITB" id="TotalITBS" type="hidden" value="${TotalITBS}" />
+                          //         <input name="BillingDto[${index}].NoFactura" value="@ViewBag.NoFactura" type="hidden" />
+                          //         <input name="BillingDto[${index}].Checks" id="checksActiver" type="hidden" value="${checksImp}" />
+                          //     </td>
+            //rellenar tabla con producto;
+            //const FName = filaOriginal.querySelector('input[name="Name"]');
+           // FName.value = filaOriginalDos.cells[0].textContent;
+
+            // const FPrice = filaOriginal.querySelector('input[name="Price"]');
+            // FPrice.value = preciVal;
+            // FPrice.disabled = true;
+
+            // const FQty = filaOriginal.querySelector('input[name="Quantitys"]');
+            // FQty.value = 1;
+
+            // const FCode = filaOriginal.querySelector('input[name="CodeProduct"]');
+            // FCode.value = filaOriginalDos.cells[6].textContent;
+
+
+            // const FDesc = filaOriginal.querySelector('input[name="Description"]');
+            // FDesc.value = filaOriginalDos.cells[7].textContent;
+            // FDesc.disabled = true;
+
+            // const FStock = filaOriginal.querySelector('input[name="Stock"]');
+            // FStock.value = filaOriginalDos.cells[5].textContent;
+
+
+            // const ArtControl = document.getElementById('ArtControl');
+            // ArtControl.style.display = 'none';
+            // const btn = document.querySelector('#btStore');
+            // btn.innerHTML = '<i class="bi bi-cart4"></i>Store';
+            // CambCantidad();
+
+
+        }
+
+
+
+
+</script>
+
+
+    </div>
+   
+<!-- Begin Page Content -->
+<div class="container-fluid mb-auto">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Inicio
+        </a>
+    </div>
+
+		    <section id="Arrows" onclick="Arrow()" style="display:none ;">
+
+        	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="ArrowLeft">
+				<i class="fas fa-arrow-left"></i>
+			</a>
+			
+		</div>
+    </section>
+	
+    <h2 class="text-center" id="seletMesa"> </h2> 
+
+
+        <section id="Mesa" style="display: block ;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center">Selecciona una mesa</h2>
+                </div>
+            </div>
+            <div class="row" >
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2" onclick="mesa(1)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-danger text-center text-uppercase mb-1 " style="font-size:30px;">
+                                        Mesa 1
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2" onclick="mesa(2)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-success text-uppercase mb-1  text-center " style="font-size:30px;">
+                                        Mesa 2
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2" onclick="mesa(3)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1 text-center " style="font-size:30px;">
+                                        Mesa 3
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            @* <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div> *@
+                                        </div>
+                                        <div class="col">
+                                            @*    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div> *@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2" onclick="mesa(4)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 text-center " style="font-size:30px;">
+                                        Mesa 4
+                                    </div>
+                                    @* <div class="h5 mb-0 font-weight-bold text-gray-800">18</div> *@
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2" onclick="mesa(5)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-danger text-center text-uppercase mb-1 " style="font-size:30px;">
+                                        Mesa 5
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2" onclick="mesa(6)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-success text-uppercase mb-1  text-center " style="font-size:30px;">
+                                        Mesa 6
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2" onclick="mesa(7)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1 text-center " style="font-size:30px;">
+                                        Mesa 7
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            @* <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div> *@
+                                        </div>
+                                        <div class="col">
+                                            @*    <div class="progress progress-sm mr-2">
+                                    <div class="progress-bar bg-info" role="progressbar"
+                                    style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                                    </div> *@
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2" onclick="mesa(8)">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 text-center " style="font-size:30px;">
+                                        Mesa 8
+                                    </div>
+                                    @* <div class="h5 mb-0 font-weight-bold text-gray-800">18</div> *@
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+  
+    <!-- Content Row -->
+
+
+
+    @* aQUI EMPIEZA DCATEGORIA  *@
+
+
+
+
+
+    <section id="Category" style="display: @DisplayCategory;">
+
+        <!-- Content Row -->
+        <form method="get"></form>
+
+        <div class="row" >
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2" style="cursor: pointer;" onclick="sortTable('Bar')">
+                
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center" >
+
+                            <img src="~/img/bar.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+                             
+                                <h2 class=" text-danger ">Bar</h2>
+                                <p>Coctel, Caipiriña, Piñña Colada, etc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2" style="cursor: pointer;" onclick="sortTable('Bebidas')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+
+                            <img src="~/img/refescos.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class ="text-danger" >Bebidas</h2>
+                            <p>Otro fragmento emocionante de contenidoplaceholder representativo. Esta vez, pasamos a la segunda columna.</p>
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Salida Gourmet')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/salidaGourmet.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class=" text-danger ">Salida Gourmet</h2>
+                            <p>Delicioso aperitivo para finalizar una noche especial.</p>
+               
+
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+		
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Entrada')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/EntradaSX.jpg" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class=" text-danger ">Entrada</h2>
+                            <p>Platillo de entrada para el disfrute de nuestro cliente especial.</p>
+                     
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Mariscos')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/marisco.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class=" text-danger ">Mariscos</h2>
+                            <p>Paellas, Sopas de Mariscos, Mariscos con guarniciones etc.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Plato especial')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/platoespecial.jpg" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+                            <h2 class=" text-danger ">Plato especial</h2>
+                            <p>Plato privilegiado para un cliente privilegiado y de gran paladar.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('FastFood')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/fastfood.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class=" text-danger ">FastFood</h2>
+                            <p>Postres esquicitos para endulzar tu paladar y hacerte disfrutar de un placentero aperitivo etc.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Dessert')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/dessert.png" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+
+                            <h2 class=" text-danger ">Dessert</h2>
+                            <p>Postres esquicitos para endulzar tu paladar y hacerte disfrutar de un placentero aperitivo etc.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- xd -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2" style="cursor: pointer;" onclick=" sortTable('Other')">
+                    <div class="card-body">
+                        <div class=" no-gutters align-items-center text-center">
+                            <img src="~/img/platoespecial.jpg" class="bd-placeholder-img rounded-circle" width="120px" height="120px" />
+                            <h2 class=" text-danger ">Other</h2>
+                            <p>Platillo destacado de nuestro Famoso y aclamado Chef.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+           
+        </div>
+        <!-- Content Row -->
+
+       </section>
+
+
+
+
+
+
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Earnings s Overview</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">  
+                        @if (!string.IsNullOrEmpty(search))
+                                {
+
+                            <form id="miFormulario" method="post" asp-action="Orders" asp-controller="Home" >
+                            <table class="table  bg-white " id="AddTr">
+                            <thead>
+                                <tr>
+
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Category </th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+       
+                                    @foreach (var product in Model)
+                                {
+                                    <tr>
+                                        <td style="display:none">@product.Id</td>
+                                        <td>@product.Name</td>
+                                        <td>@product.Description</td>
+                                        <td>@product.Category</td>
+                                        <td>@(product.UnidPrice)</td>
+                                        <td><img src="/img/@product.ImageFileName" width="100" /></td>
+                                   
+
+                                        <td style="white-space:nowrap">
+                                                    <input id="id_Product" value="@product.Id" hidden name="Id" asp-for="@product.Id" />
+                                                    <input id="id_table" hidden name="idMesa" placeholder="Digitacion" />
+                                                    <button type="submit" class="btn btn-success btn-sm" onclick="addItem(this)">Agregar</button>
+                                                    @* onclick="addItem(this)" *@
+                                        </td>
+                                    </tr>
+                                }
+                               
+                            </tbody>
+
+                        </table>
+                        </form>
+                   
+                        <nav>
+                            <ul class="pagination">
+                                @for (int i = 1; i <= totalPages; i++)
+                                {
+                                    string active = "";
+                                    if (i == pageIndex) active = "active";
+                                    <li class="page-item @active">
+                                        <a class="page-link" asp-route-pageIndex="@i"
+                                           asp-route-search="@search">@i</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Order Table</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+
+
+                    <div class="col-lg-12 mb-4">
+                        <div class="card bg-primary  text-white shadow">
+                            <div class="card-body ">
+                                <div class="contenedor-tabla">
+                                    <div class="fila-datos encabezado">
+                                        <span class="col producto">Producto</span>
+                                        <span class="col mesa">Mesa</span>
+                                        <span class="col precio">Precio</span>
+                                    </div>
+                                    <div id="Oder">
+                                        @{
+                                            decimal Total = 0;
+                                        }
+                                        @foreach (var item in orders) {
+                                         <div class="fila-datos">
+                                                @foreach (var OProd in item.OrderProducts)
+                                                {
+                                                    <span class="col producto">@OProd.Product.Name</span>
+                                                    <span class="col mesa">@item.Table_ID</span>
+                                                    <span class="col precio">$@OProd.Product.UnidPrice</span>
+                                                      Total += OProd.Product.UnidPrice;
+                                                }
+
+
+                                             
+
+                                        </div>
+                                        }
+                                        <span class="col Total"> <p><strong>Total de productos:@Total </strong> </p></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                  
+                        
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Direct
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Social
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Referral
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <div class="col-lg-6 mb-4">
+
+            <!-- Project Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="small font-weight-bold">
+                        Server Migration <span class="float-right">20%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Sales Tracking <span class="float-right">40%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Customer Database <span class="float-right">60%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Payout Details <span class="float-right">80%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Account Setup <span class="float-right">Complete!</span>
+                    </h4>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color System -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-primary text-white shadow">
+                        <div class="card-body">
+                            Primary
+                            <div class="text-white-50 small">#4e73df</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-success text-white shadow">
+                        <div class="card-body">
+                            Success
+                            <div class="text-white-50 small">#1cc88a</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-info text-white shadow">
+                        <div class="card-body">
+                            Info
+                            <div class="text-white-50 small">#36b9cc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-warning text-white shadow">
+                        <div class="card-body">
+                            Warning
+                            <div class="text-white-50 small">#f6c23e</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-danger text-white shadow">
+                        <div class="card-body">
+                            Danger
+                            <div class="text-white-50 small">#e74a3b</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-secondary text-white shadow">
+                        <div class="card-body">
+                            Secondary
+                            <div class="text-white-50 small">#858796</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-light text-black shadow">
+                        <div class="card-body">
+                            Light
+                            <div class="text-black-50 small">#f8f9fc</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card bg-dark text-white shadow">
+                        <div class="card-body">
+                            Dark
+                            <div class="text-white-50 small">#5a5c69</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <!-- Illustrations -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                             src="img/undraw_posting_photo.svg" alt="...">
+                    </div>
+                    <p>
+                        Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
+                        constantly updated collection of beautiful svg images that you can use
+                        completely free and without attribution!
+                    </p>
+                    <a target="_blank" rel="nofollow" href="https://undraw.co/">
+                        Browse Illustrations on
+                        unDraw &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Approach -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                </div>
+                <div class="card-body">
+                    <p>
+                        SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                        custom components and custom utility classes.
+                    </p>
+                    <p class="mb-0">
+                        Before working with this theme, you should become familiar with the
+                        Bootstrap framework, especially the utility classes.
+                    </p>
+                </div>
+			</div>
+    </div>
+
+<!-- /.container-fluid -->
+            </div>
+<!-- End of Main Content -->
