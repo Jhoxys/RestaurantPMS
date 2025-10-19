@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JK08pXQQ/SE=",
+  "dgSpecHash": "rZp74ZDw0l0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+  "projectFilePath": "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jhoxys\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Jhoxys\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

@@ -1,26 +1,97 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    background-color: #fff3e0;
 }
- 
+
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-metric {
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    text-align: center;
+    padding: 20px;
+}
+
+.metric-blue {
+    background-color: #2962ff;
+}
+
+.metric-yellow {
+    background-color: #f9a825;
+}
+
+.metric-green {
+    background-color: #2e7d32;
+}
+
+.metric-purple {
+    background-color: #8e24aa;
+}
+
+.metric-red {
+    background-color: #d32f2f;
+}
+
+.card-recent, .card-tables {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-entregado {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.status-listo {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.mesa {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    margin: 5px;
+}
+
+    .mesa.ocupada {
+        background-color: #e53935;
+    }
+
+    .mesa.disponible {
+        background-color: #43a047;
+    }
+/* Puedes usar clases específicas para más control */
+.producto {
+    text-align: left;
+}
+
+.precio {
+    text-align: right;
+}
 /*mi Style*/
 .contenedor-tabla {
     width: 100%;

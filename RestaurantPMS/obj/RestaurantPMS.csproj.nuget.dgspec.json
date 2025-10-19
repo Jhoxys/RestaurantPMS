@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {}
+    "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {
+    "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+        "projectUniqueName": "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
         "projectName": "RestaurantPMS",
-        "projectPath": "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+        "projectPath": "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
         "packagesPath": "C:\\Users\\Jhoxys\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jhoxys\\source\\repos\\RestaurantPMS\\RestaurantPMS\\obj\\",
+        "outputPath": "C:\\Users\\Jhoxys\\Desktop\\Mis proyectos\\RestaurantPMS\\RestaurantPMS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jhoxys\\AppData\\Roaming\\NuGet\\NuGet.Config",
