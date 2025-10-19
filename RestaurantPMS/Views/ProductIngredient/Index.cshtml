@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Html
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<RawProduct>
+@{
+	ViewData["Title"] = "Products List";
+}
+
+<div class="d-flex justify-content-between mb-3">
+	<h2>Products</h2>
+	<a class="btn btn-primary" asp-controller="ProductIngredient" asp-action="Create">Create New Product</a>
+</div>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Brand</th>
+			<th>Category</th>
+			<th>Price</th>
+			<th>Image</th>
+			<th>Created At</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var product in Model) // <-- ¡Asegúrate de que esta variable de iteración se llame 'product'!
+		{
+						<tr>
+							<td>@product.Id</td>
+							<td>@product.Name</td>
+							<td>@product.Brand</td>
+							<td>@product.Category</td>
+							<td>@product.Price.ToString("C", new System.Globalization.CultureInfo("es-DO"))</td>
+
+							<td>
+						<img src="/ProductIngredient/@product.ImagenFileName" width="100" height="100" style="object-fit:cover;" />
+				</td>
+							<td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+							<td style="white-space:nowrap">
+					<a class="btn btn-primary btn-sm" asp-controller="ProductIngredient" asp-action="Edit"
+								   asp-route-id="@product.Id">Edit</a>
+					<a class="btn btn-danger btn-sm" asp-controller="ProductIngredient" asp-action="Delete"
+								   asp-route-id="@product.Id">Delete</a>
+					<a class="btn btn-info btn-sm" asp-controller="ProductIngredient" asp-action="ManageIngredients"
+								   asp-route-id="@product.Id">Ingredients</a>
+							</td>
+						</tr>
+		}
+	</tbody>
+</table>
