@@ -18,12 +18,36 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Bill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCaWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Cocina.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb2NpbmEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/GetTables.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRUYWJsZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Menues.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZW51ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Orders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Inventory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3J5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/ProductIngredient/Create.cshtml]

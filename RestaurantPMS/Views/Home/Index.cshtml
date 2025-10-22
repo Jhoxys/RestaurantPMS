@@ -178,6 +178,41 @@
 
 </script>
 
+@* <!-- Métricas -->
+<div class="container g-3 mb-4">
+    <div class="row g-3">
+        <div class="col-md-2">
+            <div class="card-metric metric-blue">
+                <div>Pedidos Hoy</div>
+                <h3>3</h3>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card-metric metric-yellow">
+                <div>Pendientes</div>
+                <h3>1</h3>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card-metric metric-green">
+                <div>Mesas Ocupadas</div>
+                <h3>2</h3>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card-metric metric-purple">
+                <div>Ingresos Hoy</div>
+                <h3>$63.96</h3>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card-metric metric-red">
+                <div>Stock Bajo</div>
+                <h3>0</h3>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Contenido -->
@@ -241,6 +276,89 @@
                     <div class="mesa disponible">9</div>
                     <div class="mesa disponible">10</div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+<!-- Resumen -->
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <div class="card-summary bg-azul">
+            <h6>Pedidos Hoy</h6>
+            <h2>0</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card-summary bg-amarillo">
+            <h6>Pendientes</h6>
+            <h2>1</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card-summary bg-verde">
+            <h6>Mesas Ocupadas</h6>
+            <h2>2</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-summary bg-morado">
+            <h6>Ingresos Hoy</h6>
+            <h2>$0.00</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-summary bg-rojo">
+            <h6>Stock Bajo</h6>
+            <h2>0</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Pedidos Recientes -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header fw-bold">Pedidos Recientes</div>
+            <div class="card-body">
+                <div class="mb-3 border-bottom pb-2">
+                    <h6>Mesa 1 <span class="status status-pendiente text-right">Pendiente</span></h6>
+                    <p class="mb-0">$15.99 • Juan Pérez</p>
+                </div>
+                <div class="mb-3 border-bottom pb-2">
+                    <h6>Mesa 1 <span class="status status-entregado">Entregado</span></h6>
+                    <p class="mb-0">$31.98 • Juan Pérez</p>
+                </div>
+                <div class="mb-3 border-bottom pb-2">
+                    <h6>Mesa 1 <span class="status status-entregado">Entregado</span></h6>
+                    <p class="mb-0">$31.98 • Juan Pérez</p>
+                </div>
+                <div class="mb-3 border-bottom pb-2">
+                    <h6>Mesa 5 <span class="status status-listo">Listo</span></h6>
+                    <p class="mb-0">$61.97 • María González</p>
+                </div>
+                <div>
+                    <h6>Mesa 10 <span class="status status-entregado">Entregado</span></h6>
+                    <p class="mb-0">$39.48 • María González</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado de Mesas -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header fw-bold">Estado de Mesas</div>
+            <div class="card-body d-flex flex-wrap justify-content-center">
+                <div class="mesa ocupada ">1<br><small >Ocupada</small></div>
+                <div class="mesa disponible">2<br><small>Disponible</small></div>
+                <div class="mesa disponible">3<br><small>Disponible</small></div>
+                <div class="mesa disponible">4<br><small>Disponible</small></div>
+                <div class="mesa ocupada">5<br><small>Ocupada</small></div>
+                <div class="mesa disponible">6<br><small>Disponible</small></div>
+                <div class="mesa disponible">7<br><small>Disponible</small></div>
+                <div class="mesa disponible">8<br><small>Disponible</small></div>
+                <div class="mesa disponible">9<br><small>Disponible</small></div>
+                <div class="mesa disponible">10<br><small>Disponible</small></div>
             </div>
         </div>
     </div>

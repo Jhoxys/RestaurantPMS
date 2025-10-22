@@ -71,7 +71,49 @@ namespace RestaurantPMS.Controllers
             return View(products);
         }
 
-        [HttpPost]
+
+        public IActionResult Bill()
+        {
+
+
+            return View();
+
+        }
+
+
+        public IActionResult Menues()
+        {
+
+
+            return View();
+
+        }
+
+        public IActionResult GetTables()
+        {
+
+
+            return View();
+
+        }
+        public IActionResult Cocina()
+        {
+
+
+            return View();
+
+        }
+
+
+        public IActionResult Orders()
+         {
+
+
+            return View();
+
+        }
+
+            [HttpPost]
         public  async Task<IActionResult> Orders(int Id, int idMesa)
         {
             var product = await _context.Products.FindAsync(Id);
