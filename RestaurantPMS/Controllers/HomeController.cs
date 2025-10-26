@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -11,21 +12,29 @@ namespace RestaurantPMS.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _context;
+		private readonly UserManager<ApplicationUser> userManager;
+		private readonly SignInManager<ApplicationUser> signInManager;
+		private readonly ApplicationDbContext _context;
         private readonly int pageSize = 5;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(UserManager<ApplicationUser> userManager,
+			   SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
-            _logger = logger;
-            _context = context;
+			this.userManager = userManager;
+			this.signInManager = signInManager;
+			_context = context;
         }
 
         public IActionResult Index(int pageIndex,  string? search, int? Id_Table)
         {
-            // pageIndex = ViewData["PageIndex"] != null ? (int)ViewData["PageIndex"] : 1;
+			// pageIndex = ViewData["PageIndex"] != null ? (int)ViewData["PageIndex"] : 1;
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            IQueryable<Product> query = _context.Products;
+				
+			}else { return RedirectToAction("Login", "Account"); }
+
+			IQueryable<Product> query = _context.Products;
          ///   IQueryable<Order> queryOrder = _context.Orders;
             // search funtionality
             if (search != null  )
@@ -75,8 +84,14 @@ namespace RestaurantPMS.Controllers
         public IActionResult Bill()
         {
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            return View();
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+			return View();
 
         }
 
@@ -84,23 +99,41 @@ namespace RestaurantPMS.Controllers
         public IActionResult Menues()
         {
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            return View();
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+			return View();
 
         }
 
         public IActionResult GetTables()
         {
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            return View();
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+			return View();
 
         }
         public IActionResult Cocina()
         {
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            return View();
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+			return View();
 
         }
 
@@ -108,8 +141,14 @@ namespace RestaurantPMS.Controllers
         public IActionResult Orders()
          {
 
+			if (signInManager.IsSignedIn(User))
+			{
 
-            return View();
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+			return View();
 
         }
 

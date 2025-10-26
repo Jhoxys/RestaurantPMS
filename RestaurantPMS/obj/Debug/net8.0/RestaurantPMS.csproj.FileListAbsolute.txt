@@ -274,3 +274,4 @@ C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS\obj\Debug\net8
 C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\RestaurantPMS.pdb
 C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\RestaurantPMS.genruntimeconfig.cache
 C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\ref\RestaurantPMS.dll
+C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

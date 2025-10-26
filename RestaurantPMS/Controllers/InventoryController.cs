@@ -1,19 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using RestaurantPMS.Models;
 using RestaurantPMS.Service;
 
 namespace RestaurantPMS.Controllers
 {
     public class InventoryController : Controller
     {
-        private readonly ApplicationDbContext context;
+		private readonly UserManager<ApplicationUser> userManager;
+		private readonly SignInManager<ApplicationUser> signInManager;
+		private readonly ApplicationDbContext context;
 
-        public InventoryController(ApplicationDbContext context)
+        public InventoryController(UserManager<ApplicationUser> userManager,
+			   SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
-            this.context = context;
+			this.userManager = userManager;
+			this.signInManager = signInManager;
+			this.context = context;
         }
         public IActionResult Index()
         {
-            return View();
+
+			if (signInManager.IsSignedIn(User))
+			{
+
+
+			}
+			else { return RedirectToAction("Login", "Account"); }
+
+
+
+			return View();
         }
     }
 }

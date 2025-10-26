@@ -18,6 +18,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Jhoxys\Desktop\Mis proyectos\RestaurantPMS\RestaurantPMS
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Account/Password.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Jhoxys/Desktop/Mis proyectos/RestaurantPMS/RestaurantPMS/Views/Home/Bill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCaWxsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

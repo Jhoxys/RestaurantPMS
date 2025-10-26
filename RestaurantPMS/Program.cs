@@ -1,8 +1,12 @@
 using RestaurantPMS.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RestaurantPMS.Models;
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -12,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     var connectionStrings = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseSqlServer(connectionStrings);
 });
-/*
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
 
     options =>
@@ -25,7 +29,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
 
     }).AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders(); // token usado en la action  forgot password
-*/
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,5 +50,19 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+// create the roles and the fist admin user if not avaiblable yet
+
+using (var scope = app.Services.CreateScope())
+{
+
+    var userMnager = scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>))
+        as UserManager<ApplicationUser>;
+
+    var roleManager = scope.ServiceProvider.GetService(typeof(RoleManager<IdentityRole>))
+       as RoleManager<IdentityRole>;
+
+    await DBInitializer.SeedDataAsync(userMnager, roleManager);
+
+}
 
 app.Run();
