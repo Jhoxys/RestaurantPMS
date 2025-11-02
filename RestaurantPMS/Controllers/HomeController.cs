@@ -1,206 +1,140 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestaurantPMS.Models;
 using RestaurantPMS.Service;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace RestaurantPMS.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-		private readonly UserManager<ApplicationUser> userManager;
-		private readonly SignInManager<ApplicationUser> signInManager;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly ApplicationDbContext _context;
-        private readonly int pageSize = 5;
-        public HomeController(UserManager<ApplicationUser> userManager,
-			   SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
+        private readonly int _pageSize = 5;
+
+        public HomeController(
+            UserManager<ApplicationUser> userManager,
+			SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context)
         {
-			this.userManager = userManager;
-			this.signInManager = signInManager;
+			_userManager = userManager;
+			_signInManager = signInManager;
 			_context = context;
         }
 
-        public IActionResult Index(int pageIndex,  string? search, int? Id_Table)
+        public IActionResult Index(int pageIndex = 1,  string? search = null, int? Id_Table = null)
         {
-			// pageIndex = ViewData["PageIndex"] != null ? (int)ViewData["PageIndex"] : 1;
+			var today = DateTime.Today;
 
-			if (signInManager.IsSignedIn(User))
-			{
+            IQueryable<Product> query = _context.Products;
 
-				
-			}else { return RedirectToAction("Login", "Account"); }
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(s => s.Category.Contains(search));
 
-			IQueryable<Product> query = _context.Products;
-         ///   IQueryable<Order> queryOrder = _context.Orders;
-            // search funtionality
-            if (search != null  )
+            if (pageIndex < 1) pageIndex = 1;
+
+            int totalItems = query.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (decimal)_pageSize);
+
+            var products = query
+                .Skip((pageIndex - 1) * _pageSize)
+                .Take(_pageSize)
+                .ToList();
+
+            var orders = _context.Orders
+                .Include(o => o.OrderProducts).ThenInclude(op => op.Product)
+                .Include(o => o.Table)
+                .ToList();
+
+            // Mesas reales desde la BD
+            var tables = _context.Table
+                .Select(t => new TableStatusDto
+                {
+                    TableId = t.Id,
+                    Number = t.Number,
+                    IsOccupied = t.IsOccupied
+                })
+                .ToList();
+
+            // Métricas
+            var model = new DashboardDto
             {
-                query = query.Where(s => s.Category.Contains(search));// agregamos una consulta de resultados
-            }
-
-
-            // Pagination functionality
-            if (pageIndex < 1)
-            {
-                pageIndex = 1;
-            }
-
-            decimal count = query.Count(); // total del numero de paginas
-            int totalPages = (int)Math.Ceiling(count / pageSize);
-            query = query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
-
-            var products = query.ToList();
-  //          var orders = _context.Orders
-  //      .Include(o => o.OrderProducts) // <-- Esto es importante
-  ////  .Where(o => o.Product.Any()) // Solo órdenes con al menos un producto
-
-  //      .ToList();
-
-                 var orders = _context.Orders
-     .Include(o => o.OrderProducts)
-        .ThenInclude(op => op.Product)
-       .ToList();
- 
-
-
+                Products = products,
+                Orders = orders,
+                OrdersToday = orders.Count(o => o.CreatAt.Date == today),
+                PendingOrders = orders.Count(o => o.State == "Pendiente"),
+                OccupiedTables = orders.Where(o => o.State != "Completada")
+                                       .Select(o => o.TableId).Distinct().Count(),
+                IncomeToday = orders.Where(o => o.CreatAt.Date == today && o.State == "Completada")
+                                    .SelectMany(o => o.OrderProducts)
+                                    .Sum(op => op.Product.UnidPrice * op.Quantity),
+                LowStock = _context.Products.Count(p => p.Stock < 5),
+                Tables = tables
+            };
 
 
             ViewBag.Orders = orders;
             ViewData["PageIndex"] = pageIndex;
             ViewData["TotalPages"] = totalPages;
-
             ViewData["Search"] = search ?? "";
 
-           //return RedirectToAction("ggg", "Products");
-
-            return View(products);
+            return View(model);
         }
 
+        public IActionResult Bill() => View();
+        public IActionResult Menues() => View();
+        public IActionResult GetTables() => View();
+        public IActionResult Cocina() => View();
+        public IActionResult Orders() => View();
 
-        public IActionResult Bill()
-        {
-
-			if (signInManager.IsSignedIn(User))
-			{
-
-
-			}
-			else { return RedirectToAction("Login", "Account"); }
-
-			return View();
-
-        }
-
-
-        public IActionResult Menues()
-        {
-
-			if (signInManager.IsSignedIn(User))
-			{
-
-
-			}
-			else { return RedirectToAction("Login", "Account"); }
-
-			return View();
-
-        }
-
-        public IActionResult GetTables()
-        {
-
-			if (signInManager.IsSignedIn(User))
-			{
-
-
-			}
-			else { return RedirectToAction("Login", "Account"); }
-
-			return View();
-
-        }
-        public IActionResult Cocina()
-        {
-
-			if (signInManager.IsSignedIn(User))
-			{
-
-
-			}
-			else { return RedirectToAction("Login", "Account"); }
-
-			return View();
-
-        }
-
-
-        public IActionResult Orders()
-         {
-
-			if (signInManager.IsSignedIn(User))
-			{
-
-
-			}
-			else { return RedirectToAction("Login", "Account"); }
-
-			return View();
-
-        }
-
-            [HttpPost]
+        [HttpPost]
         public  async Task<IActionResult> Orders(int Id, int idMesa)
         {
             var product = await _context.Products.FindAsync(Id);
 
-            if (product != null)
-            {
-                var order = new Order
-                {
-                    Table_ID = idMesa,
-                    CreatAt = DateTime.Now,
-                    ClientId = "1",
-                    State = "pendiente"
-                };
-
-                // Agregar la relación intermedia
-                var orderProduct = new OrderProduct
-                {
-                    Order = order,
-                    Product = product,
-                    Quantity = 1
-                };
-
-                order.OrderProducts.Add(orderProduct);
-
-                _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-
-                TempData["error"] = "Producto agregado a la orden correctamente";
-            }
-            else
+            if (product == null)
             {
                 TempData["error"] = "Producto no encontrado";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index", "Home");
+
+            var order = new Order
+            {
+                TableId = idMesa,
+                CreatAt = DateTime.Now,
+                ClientId = $"Mesa-{idMesa}",
+                State = "Pendiente",
+                OrderProducts = new List<OrderProduct>()
+            };
+
+            order.OrderProducts.Add(new OrderProduct
+            {
+                Order = order,
+                Product = product,
+                Quantity = 1
+            });
+
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            TempData["message"] = "Producto agregado a la orden correctamente";
+            return RedirectToAction("Index");
         }
 
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        [AllowAnonymous]
+        public IActionResult Privacy() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

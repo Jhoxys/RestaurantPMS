@@ -55,7 +55,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InventoryMovement");
+                    b.ToTable("InventoryMovement", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -301,7 +301,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.Employee", b =>
@@ -334,7 +334,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.Ingredient", b =>
@@ -360,7 +360,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.Order", b =>
@@ -391,7 +391,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.OrderProduct", b =>
@@ -409,7 +409,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProduct", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.Product", b =>
@@ -449,7 +449,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.ProductIngredient", b =>
@@ -485,7 +485,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasIndex("RawProductId");
 
-                    b.ToTable("ProductIngredients");
+                    b.ToTable("ProductIngredients", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.RawProduct", b =>
@@ -532,7 +532,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RawProducts");
+                    b.ToTable("RawProducts", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantPMS.Models.RestaurantInventorySystem.Models.Recipe", b =>
@@ -558,7 +558,7 @@ namespace RestaurantPMS.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Recipe");
+                    b.ToTable("Recipe", (string)null);
                 });
 
             modelBuilder.Entity("BestStoreMVC.Models.RestaurantInventorySystem.Models.InventoryMovement", b =>

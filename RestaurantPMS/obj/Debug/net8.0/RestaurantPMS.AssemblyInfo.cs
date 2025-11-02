@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RestaurantPMS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd286dcfbeba3b2a0187d7658afa047d529df386")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bc6d6d21f2c20abe52e54d2f7fcc63b70cf8814")]
 [assembly: System.Reflection.AssemblyProductAttribute("RestaurantPMS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RestaurantPMS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

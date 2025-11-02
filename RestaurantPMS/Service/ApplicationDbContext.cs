@@ -10,9 +10,9 @@ namespace RestaurantPMS.Service
             : base(options)
         {
         }
+        public DbSet<Table> Table { get; set; }
 
-
-             public DbSet<Product>Products { get; set; }
+        public DbSet<Product>Products { get; set; }
     
         public DbSet<RawProduct> RawProducts { get; set; }
 
@@ -34,6 +34,8 @@ namespace RestaurantPMS.Service
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Table>().ToTable("Table");
+
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId }); // 🔑 clave compuesta
 
@@ -47,9 +49,5 @@ namespace RestaurantPMS.Service
                 .WithMany(p => p.OrderProducts)
                 .HasForeignKey(op => op.ProductId);
         }
-
-
-
     }
-
 }

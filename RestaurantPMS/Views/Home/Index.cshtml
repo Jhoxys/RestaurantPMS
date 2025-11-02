@@ -1,315 +1,41 @@
 ﻿@using Microsoft.AspNetCore.Html
 
-@model List<Product>
+@model DashboardDto
 
 @{
-    ViewData["Title"] = "Home Page";
-
-    int pageIndex = (int)ViewData["PageIndex"]!;
-    int totalPages = (int)ViewData["TotalPages"]!;
-    string search = (string)ViewData["Search"]!;
-    var DisplayCategory = "none";
-
-    var idTableTemp = TempData["Id_Table"];
-
-    var orders = ViewBag.Orders as List<Order>;
-
+    ViewData["Title"] = "Dashboard";
 }
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script type="text/javascript">
-    // Script to activate the sidebar toggle
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("miFormulario");
-
-        // form.addEventListener("submit", function (e) {
-        //     e.preventDefault(); // 🔴 Esto previene el envío normal
-
-
-
-        // });
-    });
-</script>
-<script>
-    let cont = 0;
-
-
-    function Arrow() {
-
-        let arrow = document.querySelector("#Arrows");
-        let category = document.querySelector("#Category");
-        let mesa = document.querySelector("#Mesa");
-
-        arrow.style.display = 'none';
-
-        category.style.display = 'none';
-
-        mesa.style.display = 'block';
-
-    }
-
-
-    function mesa(id) {
-
-        let arrow = document.querySelector("#Arrows");
-        let category = document.querySelector("#Category");
-        let mesa = document.querySelector("#Mesa");
-        let seletMesa = document.querySelector("#seletMesa");
-
-        seletMesa.innerHTML = "Mesa seleccionada: " + id;
-
-        cont++;
-        if (cont == 1) {
-
-            cont == 0;
-        }
-
-        category.style.display = 'block';
-        arrow.style.display = 'block';
-        mesa.style.display = 'none';
-
-        // seletMesa.style.display = 'block';
-        //  const nuevaUrl = "?Id_Table=" + encodeURIComponent(id);
-        //  history.pushState(null, "", nuevaUrl);
-        sessionStorage.setItem("mesaId", id);
-
-    }
-    function sortTable(column) {
-        // optener la mesa
-
-
-        const params = new URLSearchParams(window.location.search);
-        const idTable = params.get("Id_Table");
-        const tablaSegunda = document.getElementById("Oder");
-
-
-        window.location.href = "?search=" + column;
-
-    }
-
-
-    function addItem(boton) {
-
-
-        let mesa = "Mesa1"; // o como corresponda
-
-        const filaOriginal = boton.closest("tr");
-        const filaUno = filaOriginal.cloneNode(true);
-
-
-        const tablaSegunda = document.getElementById("Oder");
-        const filaOriginalDos = boton.closest("tr");
-        const filaDos = filaOriginalDos.cloneNode(true);
-
-        //filaClonadaDos.cells[0].textContent = parseFloat(filaOriginalDos.cells[0].textContent) + 1;
-        const NameVal = filaOriginal.cells[1].textContent;
-        const preciVal = parseFloat(filaOriginal.cells[4].textContent);
-
-        // <input  id="id_Product" hidden />
-        //                                          <input id="id_table" hidden />
-
-
-
-        const IdMesa = sessionStorage.getItem("mesaId");
-        const idTable = document.querySelector("#id_table");
-        idTable.value = IdMesa;
-
-
-        // tablaSegunda.innerHTML += `
-
-        //                           <div class="fila-datos">
-        //                                     <span class="col producto">${NameVal}</span>
-        //                                     <span class="col mesa">${IdMesa}</span>
-        //                                     <span class="col precio">$${preciVal}</span>
-
-        //                        </div>
-
-        //                     `;
-
-
-        // <th scope="row">${index}</th>
-        //    <td><input class="form-control" name="BillingDto[${index}].CodeProduct" value="${CodeR}" readonly /></td>
-        //     <td><input class="form-control" name="BillingDto[${index}].Name" value="${CNameR}" readonly /></td>
-        //     <td><input class="form-control" name="BillingDto[${index}].Stock" value="${FStockR}" readonly /></td>
-        //     <td><input class="form-control" name="BillingDto[${index}].Description" value="${FDesction}" readonly  /> </td>
-        //     <td><input class="form-control" name="BillingDto[${index}].Quantitys"  value="${FQtyR}"  readonly  /></td>
-        //     <td><input class="form-control" name="BillingDto[${index}].Price"  value="${FPriceR}"  readonly  /></td>
-        //     <td><input class="form-control" id="ValAmount" name="BillingDto[${index}].amount"  value="${Famountval}" readonly  /></td>
-        //     <td><button class="btn btn-danger text-capitalize active"  onclick="eliminarFila(this)">Eliminar</button></td>
-        //     <td><input name="BillingDto[${index}].ITB" id="TotalITBS" type="hidden" value="${TotalITBS}" />
-        //         <input name="BillingDto[${index}].NoFactura" value="@ViewBag.NoFactura" type="hidden" />
-        //         <input name="BillingDto[${index}].Checks" id="checksActiver" type="hidden" value="${checksImp}" />
-        //     </td>
-        //rellenar tabla con producto;
-        //const FName = filaOriginal.querySelector('input[name="Name"]');
-        // FName.value = filaOriginalDos.cells[0].textContent;
-
-        // const FPrice = filaOriginal.querySelector('input[name="Price"]');
-        // FPrice.value = preciVal;
-        // FPrice.disabled = true;
-
-        // const FQty = filaOriginal.querySelector('input[name="Quantitys"]');
-        // FQty.value = 1;
-
-        // const FCode = filaOriginal.querySelector('input[name="CodeProduct"]');
-        // FCode.value = filaOriginalDos.cells[6].textContent;
-
-
-        // const FDesc = filaOriginal.querySelector('input[name="Description"]');
-        // FDesc.value = filaOriginalDos.cells[7].textContent;
-        // FDesc.disabled = true;
-
-        // const FStock = filaOriginal.querySelector('input[name="Stock"]');
-        // FStock.value = filaOriginalDos.cells[5].textContent;
-
-
-        // const ArtControl = document.getElementById('ArtControl');
-        // ArtControl.style.display = 'none';
-        // const btn = document.querySelector('#btStore');
-        // btn.innerHTML = '<i class="bi bi-cart4"></i>Store';
-        // CambCantidad();
-
-
-    }
-
-
-
-
-</script>
-
-@* <!-- Métricas -->
-<div class="container g-3 mb-4">
-    <div class="row g-3">
-        <div class="col-md-2">
-            <div class="card-metric metric-blue">
-                <div>Pedidos Hoy</div>
-                <h3>3</h3>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card-metric metric-yellow">
-                <div>Pendientes</div>
-                <h3>1</h3>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card-metric metric-green">
-                <div>Mesas Ocupadas</div>
-                <h3>2</h3>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card-metric metric-purple">
-                <div>Ingresos Hoy</div>
-                <h3>$63.96</h3>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card-metric metric-red">
-                <div>Stock Bajo</div>
-                <h3>0</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Contenido -->
-<div class="container mt-4">
-    <div class="row g-4">
-        <!-- Pedidos recientes -->
-        <div class="col-md-6">
-            <div class="card-recent">
-                <h5 class="mb-3 fw-bold">Pedidos Recientes</h5>
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <div class="fw-bold">Mesa 1</div>
-                        <small>$15.99 • Juan Pérez</small>
-                    </div>
-                    <span class="status-badge status-pendiente">Pendiente</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <div class="fw-bold">Mesa 1</div>
-                        <small>$31.98 • Juan Pérez</small>
-                    </div>
-                    <span class="status-badge status-entregado">Entregado</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <div class="fw-bold">Mesa 1</div>
-                        <small>$31.98 • Juan Pérez</small>
-                    </div>
-                    <span class="status-badge status-entregado">Entregado</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <div class="fw-bold">Mesa 5</div>
-                        <small>$61.97 • María González</small>
-                    </div>
-                    <span class="status-badge status-listo">Listo</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <div>
-                        <div class="fw-bold">Mesa 10</div>
-                        <small>$39.48 • María González</small>
-                    </div>
-                    <span class="status-badge status-entregado">Entregado</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Estado de mesas -->
-        <div class="col-md-6">
-            <div class="card-tables">
-                <h5 class="mb-3 fw-bold">Estado de Mesas</h5>
-                <div class="d-flex flex-wrap">
-                    <div class="mesa ocupada">1</div>
-                    <div class="mesa disponible">2</div>
-                    <div class="mesa disponible">3</div>
-                    <div class="mesa disponible">4</div>
-                    <div class="mesa ocupada">5</div>
-                    <div class="mesa disponible">6</div>
-                    <div class="mesa disponible">7</div>
-                    <div class="mesa disponible">8</div>
-                    <div class="mesa disponible">9</div>
-                    <div class="mesa disponible">10</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> *@
-<!-- Resumen -->
+<!-- Resumen de métricas -->
 <div class="row g-3 mb-4">
     <div class="col-md-2">
         <div class="card-summary bg-azul">
             <h6>Pedidos Hoy</h6>
-            <h2>0</h2>
+            <h2>@Model.OrdersToday</h2>
         </div>
     </div>
     <div class="col-md-2">
         <div class="card-summary bg-amarillo">
             <h6>Pendientes</h6>
-            <h2>1</h2>
+            <h2>@Model.PendingOrders</h2>
         </div>
     </div>
     <div class="col-md-2">
         <div class="card-summary bg-verde">
             <h6>Mesas Ocupadas</h6>
-            <h2>2</h2>
+            <h2>@Model.OccupiedTables</h2>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card-summary bg-morado">
             <h6>Ingresos Hoy</h6>
-            <h2>$0.00</h2>
+            <h2>@Model.IncomeToday.ToString("C")</h2>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card-summary bg-rojo">
             <h6>Stock Bajo</h6>
-            <h2>0</h2>
+            <h2>@Model.LowStock</h2>
         </div>
     </div>
 </div>
@@ -320,26 +46,19 @@
         <div class="card shadow-sm">
             <div class="card-header fw-bold">Pedidos Recientes</div>
             <div class="card-body">
-                <div class="mb-3 border-bottom pb-2">
-                    <h6>Mesa 1 <span class="status status-pendiente text-right">Pendiente</span></h6>
-                    <p class="mb-0">$15.99 • Juan Pérez</p>
-                </div>
-                <div class="mb-3 border-bottom pb-2">
-                    <h6>Mesa 1 <span class="status status-entregado">Entregado</span></h6>
-                    <p class="mb-0">$31.98 • Juan Pérez</p>
-                </div>
-                <div class="mb-3 border-bottom pb-2">
-                    <h6>Mesa 1 <span class="status status-entregado">Entregado</span></h6>
-                    <p class="mb-0">$31.98 • Juan Pérez</p>
-                </div>
-                <div class="mb-3 border-bottom pb-2">
-                    <h6>Mesa 5 <span class="status status-listo">Listo</span></h6>
-                    <p class="mb-0">$61.97 • María González</p>
-                </div>
-                <div>
-                    <h6>Mesa 10 <span class="status status-entregado">Entregado</span></h6>
-                    <p class="mb-0">$39.48 • María González</p>
-                </div>
+                @foreach (var order in Model.Orders.OrderByDescending(o => o.CreatAt).Take(5))
+                {
+                    <div class="mb-3 border-bottom pb-2">
+                        <h6>
+                            Mesa @order.TableId
+                            <span class="status status-@order.State.ToLower()">@order.State</span>
+                        </h6>
+                        <p class="mb-0">
+                            @order.OrderProducts.Sum(op => op.Product.UnidPrice * op.Quantity).ToString("C")
+                            • @order.ClientId
+                        </p>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -349,16 +68,17 @@
         <div class="card shadow-sm">
             <div class="card-header fw-bold">Estado de Mesas</div>
             <div class="card-body d-flex flex-wrap justify-content-center">
-                <div class="mesa ocupada ">1<br><small >Ocupada</small></div>
-                <div class="mesa disponible">2<br><small>Disponible</small></div>
-                <div class="mesa disponible">3<br><small>Disponible</small></div>
-                <div class="mesa disponible">4<br><small>Disponible</small></div>
-                <div class="mesa ocupada">5<br><small>Ocupada</small></div>
-                <div class="mesa disponible">6<br><small>Disponible</small></div>
-                <div class="mesa disponible">7<br><small>Disponible</small></div>
-                <div class="mesa disponible">8<br><small>Disponible</small></div>
-                <div class="mesa disponible">9<br><small>Disponible</small></div>
-                <div class="mesa disponible">10<br><small>Disponible</small></div>
+                @foreach (var table in Model.Tables)
+                {
+                    if (table.IsOccupied)
+                    {
+                        <div class="mesa ocupada">@table.Number<br><small>Ocupada</small></div>
+                    }
+                    else
+                    {
+                        <div class="mesa disponible">@table.Number<br><small>Disponible</small></div>
+                    }
+                }
             </div>
         </div>
     </div>
