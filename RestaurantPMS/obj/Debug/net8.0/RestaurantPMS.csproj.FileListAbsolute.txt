@@ -410,10 +410,10 @@ C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\Restaura.10A3A122.Up2Date
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\RestaurantPMS.dll
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\refint\RestaurantPMS.dll
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\RestaurantPMS.pdb
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\RestaurantPMS.genruntimeconfig.cache
 C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\ref\RestaurantPMS.dll
-C:\Users\Anthony Cabrera\Desktop\Proyecto-Final\RestaurantPMS\RestaurantPMS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
