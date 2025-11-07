@@ -12,8 +12,8 @@ using RestaurantPMS.Service;
 namespace RestaurantPMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251107144608_RecreateTable")]
-    partial class RecreateTable
+    [Migration("20251107151049_recrearmesas")]
+    partial class recrearmesas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

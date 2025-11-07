@@ -5,7 +5,7 @@
 namespace RestaurantPMS.Migrations
 {
     /// <inheritdoc />
-    public partial class RecreateTable : Migration
+    public partial class recrearmesas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,12 +32,18 @@ namespace RestaurantPMS.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tables_EmployeeId",
+                table: "Tables",
+                column: "EmployeeId");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+                migrationBuilder.DropTable(
                 name: "Tables");
         }
     }
