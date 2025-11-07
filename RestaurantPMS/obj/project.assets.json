@@ -4264,11 +4264,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+      "projectUniqueName": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS.csproj",
       "projectName": "RestaurantPMS",
-      "projectPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+      "projectPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS.csproj",
       "packagesPath": "C:\\Users\\Anthony Cabrera\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\RestaurantPMS\\RestaurantPMS\\obj\\",
+      "outputPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

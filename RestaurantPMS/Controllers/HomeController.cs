@@ -47,11 +47,11 @@ namespace RestaurantPMS.Controllers
 
             var orders = _context.Orders
                 .Include(o => o.OrderProducts).ThenInclude(op => op.Product)
-                .Include(o => o.Table)
+                .Include(o => o.Tables)
                 .ToList();
 
             // Mesas reales desde la BD
-            var tables = _context.Table
+            var tables = _context.Tables
                 .Select(t => new TableStatusDto
                 {
                     TableId = t.Id,

@@ -8,7 +8,7 @@
         public int Table_ID { get; set; }
 
         // Prpiedad de navegación
-        public Table Table { get; set; } = null!;
+        public Tables Tables { get; set; } = null!;
 
         public DateTime CreatAt { get; set; }
 
