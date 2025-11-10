@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD:obj/RestaurantPMS.csproj.nuget.dgspec.json
     "C:\\Users\\soporte\\Desktop\\Repositorio-de-Git\\RestaurantPMS\\RestaurantPMS.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\soporte\\Desktop\\Repositorio-de-Git\\RestaurantPMS\\RestaurantPMS.csproj",
         "packagesPath": "C:\\Users\\soporte\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\soporte\\Desktop\\Repositorio-de-Git\\RestaurantPMS\\obj\\",
+=======
+    "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+        "projectName": "RestaurantPMS",
+        "projectPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS\\RestaurantPMS.csproj",
+        "packagesPath": "C:\\Users\\Anthony Cabrera\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Anthony Cabrera\\Desktop\\Proyecto-Final\\Repo\\RestaurantPMS\\RestaurantPMS\\obj\\",
+>>>>>>> 9978fe58fc7bfdc52cd450dc8376dc3e1833fa70:RestaurantPMS/obj/RestaurantPMS.csproj.nuget.dgspec.json
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

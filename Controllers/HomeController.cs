@@ -47,7 +47,7 @@ namespace RestaurantPMS.Controllers
 
             var orders = _context.Orders
                 .Include(o => o.OrderProducts).ThenInclude(op => op.Product)
-                .Include(o => o.Table)
+                .Include(o => o.Tables)
                 .ToList();
 
             // Mesas reales desde la BD
