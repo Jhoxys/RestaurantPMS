@@ -16,9 +16,17 @@ wwwroot\img\marisco.png
 wwwroot\img\platoespecial.jpg
 wwwroot\img\refescos.png
 wwwroot\img\salidaGourmet.png
+<<<<<<< HEAD:obj/Debug/net8.0/staticwebassets.upToDateCheck.txt
 wwwroot\js\sb-admin-2.min.js
 wwwroot\js\site.js
 wwwroot\js\sweetalert2@11.js
+=======
+wwwroot\js\chart-area.js
+wwwroot\js\chart-bar.js
+wwwroot\js\chart-pie.js
+wwwroot\js\sb-admin-2.min.js
+wwwroot\js\site.js
+>>>>>>> 7e56b5d391543f7992cbb5927eb650b73dfa1f12:RestaurantPMS/obj/Debug/net8.0/staticwebassets.upToDateCheck.txt
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -76,7 +84,10 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+<<<<<<< HEAD:obj/Debug/net8.0/staticwebassets.upToDateCheck.txt
 wwwroot\Rotativa\wkhtmltox\dllbegin.inc
 wwwroot\Rotativa\wkhtmltox\dllend.inc
 wwwroot\Rotativa\wkhtmltox\image.h
 wwwroot\Rotativa\wkhtmltox\pdf.h
+=======
+>>>>>>> 7e56b5d391543f7992cbb5927eb650b73dfa1f12:RestaurantPMS/obj/Debug/net8.0/staticwebassets.upToDateCheck.txt

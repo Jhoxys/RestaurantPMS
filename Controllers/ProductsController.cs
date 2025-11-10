@@ -19,8 +19,6 @@ namespace RestaurantPMS.Controllers
             this.environment = environment;
         }
 
-
-
         public IActionResult Index(int pageIndex, string? search, string? column, string? orderBy)
         {
             IQueryable<Product> query = context.Products;

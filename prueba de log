@@ -1,0 +1,66 @@
+[33mcommit dd286dcfbeba3b2a0187d7658afa047d529df386[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Jhovanny Alejandro Ventura <79801455+Jhoxys@users.noreply.github.com>
+Date:   Fri Oct 31 03:49:46 2025 -0400
+
+    Add header to index.html
+
+[33mcommit 72386584342f4fde58138835a82926038658b978[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Sun Oct 26 01:07:39 2025 -0400
+
+    Integracion de Registros, INicio de cecion y Cerrar Sesion
+
+[33mcommit ed5b13bb47f1f3b064614e35f502a958c15f1631[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Wed Oct 22 22:10:51 2025 -0400
+
+    Cambios en el color
+
+[33mcommit 84fe1fb3c36bec8a6f408241fbb01c40c29a9987[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Tue Oct 21 21:22:41 2025 -0400
+
+    Cambiso en el diseño
+
+[33mcommit 78066d819787fd8933cb9a84590be2fb7e041587[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Tue Oct 21 21:07:09 2025 -0400
+
+    Subr tema completo
+
+[33mcommit aaf48d54933d788cb5d40feeb141603f28b18877[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Sun Oct 19 15:58:24 2025 -0400
+
+    subir tema
+
+[33mcommit 60d782b25c9752066679629d7d1523972384dbfc[m
+Merge: c95094c bf200a1
+Author: Victor Perez <victorperezreyes00@gmail.com>
+Date:   Sun Oct 19 15:12:58 2025 -0400
+
+    commit
+
+[33mcommit bf200a1ca20370b7f49cec4f94b29318720a968e[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Sun Oct 12 19:08:27 2025 -0400
+
+     subir archivos del proyecto RestaurantPMS
+
+[33mcommit b3c075a4562930eed2ad8a8d32a3fe9f3b42a05b[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Fri Oct 10 23:40:58 2025 -0400
+
+    Subir programa
+
+[33mcommit c95094ca92913e96cb430c57b5a93375cfd851d1[m
+Author: Jhoxys Torres <jhoxys.torres@gmail.com>
+Date:   Mon Dec 2 18:02:09 2024 -0400
+
+    Agregar .gitignore para ignorar archivos temporales
+
+[33mcommit e0ea2f35c5d9abf485dda61413e059096331f631[m
+Author: Jhovanny Alejandro Ventura <79801455+Jhoxys@users.noreply.github.com>
+Date:   Thu Jul 10 21:31:15 2025 -0400
+
+    Initial commit

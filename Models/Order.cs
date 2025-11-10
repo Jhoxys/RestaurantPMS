@@ -4,23 +4,22 @@
     {
         public int Id { get; set; }
 
-        public int Table_ID { get; set; } 
+        // Clave foránea a la mesa
+        public int Table_ID { get; set; }
+
+        // Prpiedad de navegación
+        public Tables Table { get; set; } = null!;
 
         public DateTime CreatAt { get; set; }
 
         public string State { get; set; } = "pendiente";
 
-        // Relación con productos
-
-    public List<OrderProduct> OrderProducts { get; set; } = new();
-
-
-        //// Relación con cliente
         public string ClientId { get; set; } = "";
 
-        //// Relación con empleado que atiende la comanda
         public string EmployeeId { get; set; } = "";
 
+        public int TableId { get; set; }
 
+        public List<OrderProduct> OrderProducts { get; set; } = new();
     }
 }

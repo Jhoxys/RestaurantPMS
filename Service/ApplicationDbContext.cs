@@ -1,17 +1,18 @@
 ﻿using RestaurantPMS.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RestaurantPMS.Service
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+        public DbSet<Tables> Tables { get; set; }
 
-
-             public DbSet<Product>Products { get; set; }
+        public DbSet<Product>Products { get; set; }
     
         public DbSet<RawProduct> RawProducts { get; set; }
 
@@ -33,6 +34,8 @@ namespace RestaurantPMS.Service
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Tables>().ToTable("Tables");
+
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId }); // 🔑 clave compuesta
 
@@ -46,9 +49,5 @@ namespace RestaurantPMS.Service
                 .WithMany(p => p.OrderProducts)
                 .HasForeignKey(op => op.ProductId);
         }
-
-
-
     }
-
 }
