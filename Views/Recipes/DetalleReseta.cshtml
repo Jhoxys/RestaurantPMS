@@ -1,0 +1,186 @@
+﻿@model IEnumerable<RestaurantPMS.Models.ReporteDetalladoIngredientesRecetaView>
+
+@{
+    ViewData["Title"] = "Reporte Detallado de Ingredientes por Receta";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+@if (Model != null && Model.Any())
+{
+    var recetas = Model.GroupBy(r => r.Receta); // Agrupamos por nombre de receta
+
+    @foreach (var recetaGroup in recetas)
+    {
+        var recetaNombre = recetaGroup.Key ?? "";
+        var recetaKey = recetaNombre.Replace(" ", "_"); // para usar como id seguro
+        var recetaId = recetaGroup.First().RecetaId; // obtener RecetaId para pasar al Create si es necesario
+
+        <div class="card mb-4 shadow" data-receta="@recetaKey">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@recetaNombre</h4>
+                <div>
+                    <button class="btn btn-success btn-sm me-2" onclick="location.href='@Url.Action("Create", "Products", new { recetaId = recetaId })'">
+                        <i class="fas fa-plus"></i> Agregar Producto
+                    </button>
+                    <button class="btn btn-success btn-sm me-2" onclick="marcarTodos('@recetaKey')">
+                        <i class="fas fa-check"></i> Marcar todos
+                    </button>
+                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregar" data-receta="@recetaKey">
+                        <i class="fas fa-plus"></i> Agregar Ingrediente
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                @* tabla de ingredientes (sin cambios) *@
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Agregar</th>
+                            <th>Ingrediente</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                            <th>Costo Unitario</th>
+                            <th>Costo por Receta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in recetaGroup)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="form-check-input ingrediente-checkbox"
+                                           value="@item.CostoPorReceta"
+                                           data-receta="@recetaKey"
+                                           onchange="actualizarTotal('@recetaKey')" />
+                                </td>
+                                <td>@item.Ingrediente</td>
+                                <td>@item.Cantidad</td>
+                                <td>@item.UnidadMedida</td>
+                                <td>@item.CostoUnitario.ToString("C2", new System.Globalization.CultureInfo("es-DO"))</td>
+                                <td>@item.CostoPorReceta.ToString("C2", new System.Globalization.CultureInfo("es-DO"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="fw-bold">
+                            <td colspan="5" class="text-end">Costo Total:</td>
+                            <td id="total-@recetaKey">@recetaGroup.Sum(x => x.CostoPorReceta).ToString("C2", new System.Globalization.CultureInfo("es-DO"))</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-danger btn-sm" onclick="quitarSeleccionados('@recetaKey')">
+                        <i class="fas fa-times"></i> Quitar seleccionados
+                    </button>
+                    <span class="fw-bold">Total Seleccionado: <span id="seleccionado-@recetaKey">0.00</span></span>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-warning">
+        No se encontraron datos de ingredientes.
+    </div>
+}
+
+<!-- Modal Agregar Ingrediente -->
+<div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="modalAgregarLabel">Agregar Ingrediente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarIngrediente">
+                    <input type="hidden" id="recetaKey" />
+                    <div class="mb-3">
+                        <label for="ingredienteNombre" class="form-label">Ingrediente</label>
+                        <input type="text" class="form-control" id="ingredienteNombre" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" step="0.01" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="unidad" class="form-label">Unidad</label>
+                        <input type="text" class="form-control" id="unidad" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="costoUnitario" class="form-label">Costo Unitario</label>
+                        <input type="number" class="form-control" id="costoUnitario" step="0.01" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarIngrediente()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Marcar todos los checkbox
+        function marcarTodos(recetaKey) {
+            const card = document.querySelector(`[data-receta='${recetaKey}']`);
+            if (card) {
+                card.querySelectorAll('input.ingrediente-checkbox').forEach(cb => cb.checked = true);
+                actualizarTotal(recetaKey);
+            }
+        }
+
+        // Quitar seleccionados
+        function quitarSeleccionados(recetaKey) {
+            const card = document.querySelector(`[data-receta='${recetaKey}']`);
+            if (card) {
+                card.querySelectorAll('input.ingrediente-checkbox').forEach(cb => cb.checked = false);
+                actualizarTotal(recetaKey);
+            }
+        }
+
+        // Actualiza el total seleccionado
+        function actualizarTotal(recetaKey) {
+            const card = document.querySelector(`[data-receta='${recetaKey}']`);
+            if (card) {
+                let totalSeleccionado = 0;
+                card.querySelectorAll('input.ingrediente-checkbox:checked').forEach(cb => {
+                    totalSeleccionado += parseFloat(cb.value);
+                });
+                document.getElementById(`seleccionado-${recetaKey}`).innerText =
+                    totalSeleccionado.toLocaleString('es-DO', { style: 'currency', currency: 'DOP' });
+            }
+        }
+
+        // Abrir modal y guardar recetaKey
+        var modalAgregar = document.getElementById('modalAgregar');
+        modalAgregar.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var recetaKey = button.getAttribute('data-receta');
+            document.getElementById('recetaKey').value = recetaKey;
+        });
+
+        // Guardar ingrediente (simulado)
+        function guardarIngrediente() {
+            var recetaKey = document.getElementById('recetaKey').value;
+            var nombre = document.getElementById('ingredienteNombre').value;
+            var cantidad = parseFloat(document.getElementById('cantidad').value);
+            var unidad = document.getElementById('unidad').value;
+            var costoUnitario = parseFloat(document.getElementById('costoUnitario').value);
+            var costoPorReceta = cantidad * costoUnitario;
+
+            // Aquí podrías enviar los datos al servidor mediante AJAX
+            // Por ejemplo: fetch('/Recetas/AgregarIngrediente', {method:'POST', body: ...})
+
+            alert(`Ingrediente agregado: ${nombre}, Cantidad: ${cantidad} ${unidad}, Costo: ${costoPorReceta.toFixed(2)}`);
+            bootstrap.Modal.getInstance(modalAgregar).hide();
+
+            // Limpiar formulario
+            document.getElementById('formAgregarIngrediente').reset();
+        }
+    </script>
+}

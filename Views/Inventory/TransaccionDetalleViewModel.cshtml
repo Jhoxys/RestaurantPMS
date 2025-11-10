@@ -1,0 +1,101 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using RestaurantPMS.Models
+
+
+@model RestaurantPMS.ViewModels.TransaccionDetalleViewModel
+
+@* Vista Parcial para generar el recibo/PDF de una transacción. USA EL MODELO DE DETALLE CORREGIDO. *@
+
+@{
+    Layout = null; // ¡Crucial para la generación de PDF con Rotativa!
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .recibo-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+            .recibo-header h1 {
+                margin: 0;
+                font-size: 14pt;
+            }
+
+        .detalle-tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+            .detalle-tabla th, .detalle-tabla td {
+                border: 1px solid #eee;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .detalle-tabla th {
+                background-color: #f8f8f8;
+            }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="recibo-header">
+        <h1>Recibo de Transacción de Inventario</h1>
+
+        @* ✅ ACCESO PLANO AL ENCABEZADO (Corrige el error de Encabezado anidado) *@
+        <p>Transacción ID: **@Model.TransactionId**</p>
+        <p>Tipo: **@Model.TipoMovimiento** | Fecha: **@Model.FechaTransaccion.ToString("dd/MM/yyyy HH:mm")**</p>
+        <p>Estatus: **@Model.Estatus**</p>
+        <p>Observaciones: @Model.Observaciones</p>
+    </div>
+
+    <h3>Detalle del Movimiento</h3>
+    <table class="detalle-tabla">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cant.</th>
+                <th>Unidad</th>
+                <th>Costo Unitario</th>
+                <th>Costo Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* ✅ BUCLE CORREGIDO: Itera sobre elementos de DetalleTransaccionItemViewModel *@
+            @foreach (var detalle in Model.Detalles)
+            {
+                <tr>
+                    <td>@detalle.NombreProducto</td>
+                    <td>@detalle.Cantidad.ToString("N2")</td>
+                    <td>@detalle.UnidadMedida</td>
+                    <td>@detalle.CostoUnitario.ToString("C2")</td>
+                    <td>@detalle.CostoTotal.ToString("C2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total de ítems: **@Model.Detalles.Count()** | Costo Total Transacción: **@Model.GranTotal.ToString("C2")**
+    </div>
+</body>
+</html>

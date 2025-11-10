@@ -1,0 +1,460 @@
+﻿ @using X.PagedList
+@using X.PagedList.Mvc.Core
+@using RestaurantPMS.ViewModels
+@using RestaurantPMS.Models
+
+@model InventarioViewModel
+@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+    ViewData["Title"] = "Inventario y Movimientos";
+}
+
+<div class="container-fluid py-4 py-md-5">
+    <div class="row g-4">
+
+        <div class="col-lg-8">
+            
+            @* Lógica para mostrar mensajes de TempData aquí si es necesario *@
+
+            <div class="panel mb-4">
+                <h5 class="mb-3 fw-bold text-primary">🛒 Transacción en Curso</h5>
+                
+                <div class="mb-3">
+                    <label for="TipoMovimientoGlobal" class="form-label">Tipo de Movimiento (Único para toda la transacción) *</label>
+                    <select id="TipoMovimientoGlobal" class="form-select form-select-lg" required>
+                        <option value="ENTRADA">ENTRADA (Compra, Ajuste Positivo)</option>
+                        <option value="SALIDA">SALIDA (Venta, Pérdida, Ajuste Negativo)</option>
+                    </select>
+                </div>
+
+                <div id="lista-movimiento-temporal" class="card p-3 mb-3 border-primary">
+                </div>
+                
+                <form id="form-finalizar-movimiento" asp-action="GuardarMovimientos" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="MovimientosJson" id="MovimientosJsonInput" />
+                    
+                    <button type="submit" class="btn btn-warning w-100 text-dark fw-semibold">
+                        <span class="me-2">✔</span> Finalizar y Registrar Movimientos
+                    </button>
+                </form>
+            </div>
+
+            <div class="panel mb-4 mt-5">
+                <h5 class="mb-1">Productos de Inventario</h5>
+                <div class="text-muted small mb-3">Seleccione un producto existente para añadirlo a la transacción.</div>
+
+                <div class="mb-3">
+                    <input type="text" id="filtroInventario" class="form-control" placeholder="Escriba aquí para buscar por nombre o categoría..." />
+                </div>
+                
+                <div id="productos-inventario-contenedor">
+                    @* Se inserta el contenido de la Vista Parcial _ListadoProductos.cshtml *@
+                    @await Html.PartialAsync("_ListadoProductos", Model)
+                </div>
+                
+            </div>
+            
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="panel mb-4">
+                <h5 class="mb-3">➕ Agregar Ítem Temporal</h5>
+                <form id="form-agregar-item" asp-action="AgregarItem" method="post"> 
+                    @Html.AntiForgeryToken()
+                    
+                    @* Campo para mostrar posibles errores de validación de servidor (si se envia el form) *@
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.Nombre_Producto" class="form-label">Nombre *</label>
+                        <input asp-for="NuevoProducto.Nombre_Producto" type="text" class="form-control" placeholder="Nombre del producto" required>
+                        <span asp-validation-for="NuevoProducto.Nombre_Producto" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.CategoriaId" class="form-label">Categoría *</label>
+                        <select asp-for="NuevoProducto.CategoriaId" class="form-select select2-basic" required>
+                            <option value="">Seleccionar Categoría</option>
+                            @if (Model?.CategoriasDisponibles != null)
+                            {
+                                @foreach (var cat in Model.CategoriasDisponibles)
+                                {
+                                    <option value="@cat.Key">@cat.Value</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="NuevoProducto.CategoriaId" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.Stock_Actual" class="form-label">Cantidad Inicial (Movimiento) *</label>
+                        <input asp-for="NuevoProducto.Stock_Actual" type="number" class="form-control" value="1" min="0.01" step="0.01" required>
+                        <span asp-validation-for="NuevoProducto.Stock_Actual" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.Stock_Minimo" class="form-label">Stock Mínimo (Referencia) *</label>
+                        <input asp-for="NuevoProducto.Stock_Minimo" type="number" class="form-control" value="0" min="0" required>
+                        <span asp-validation-for="NuevoProducto.Stock_Minimo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.Unidad" class="form-label">Unidad *</label>
+                        <input asp-for="NuevoProducto.Unidad" type="text" class="form-control" placeholder="kg, litros, unidades" required>
+                        <span asp-validation-for="NuevoProducto.Unidad" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.Costo_Unitario" class="form-label">Costo por Unidad *</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input asp-for="NuevoProducto.Costo_Unitario" type="number" class="form-control" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <span asp-validation-for="NuevoProducto.Costo_Unitario" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NuevoProducto.ProveedorId" class="form-label">Proveedor</label>
+                        <select asp-for="NuevoProducto.ProveedorId" class="form-select select2-basic">
+                            <option value="">Seleccionar Proveedor</option>
+                            @if (Model?.ProveedoresDisponibles != null)
+                            {
+                                @foreach (var prov in Model.ProveedoresDisponibles)
+                                {
+                                    <option value="@prov.Key">@prov.Value</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="NuevoProducto.ProveedorId" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-brand w-100">
+                        <span class="me-1">📝</span> Añadir a la Transacción
+                    </button>
+                </form>
+            </div>
+
+            @* Movimientos Recientes (Placeholder) *@
+            <div class="panel">
+                <h5 class="mb-2">Movimientos Recientes</h5>
+                <p class="text-muted small">Visualización de historial...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* 1. Obtener los mensajes de TempData en variables C# y usarlos con @Html.Raw() 
+       dentro del script para escapar comillas y caracteres especiales.
+*@
+@{
+    // Asegúrate de que SweetAlert2 esté cargado antes de este script.
+    var successMessage = TempData["Success"] as string;
+    var errorMessage = TempData["Error"] as string;
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+
+            // ===========================================
+            // ⭐ 0. LÓGICA DE ALERTAS DE TEMP DATA (SweetAlert2) ⭐
+            // ===========================================
+            const successMsg = '@Html.Raw(successMessage)';
+            const errorMsg = '@Html.Raw(errorMessage)';
+
+            // Verificar y mostrar alerta de éxito
+            if (successMsg && successMsg.trim() !== '') {
+                Swal.fire({
+                    title: '¡Transacción Exitosa!',
+                    html: successMsg,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    timer: 8000 // Deja más tiempo para que el usuario lea el detalle
+                });
+            }
+
+            // Verificar y mostrar alerta de error
+            if (errorMsg && errorMsg.trim() !== '') {
+                Swal.fire({
+                    title: 'Error de Procesamiento',
+                    html: errorMsg,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
+                });
+            }
+            // ===========================================
+            // FIN DE LÓGICA DE ALERTAS
+            // ===========================================
+
+            // Inicialización de Select2 (asumiendo que tienes la librería cargada)
+            $('.select2-basic').select2({
+                theme: "bootstrap-5",
+                width: '100%',
+                placeholder: function(){
+                    return $(this).data('placeholder');
+                },
+                allowClear: true
+            });
+
+            actualizarListaMovimientoUI();
+
+            // ------------------------------------------
+            // 1. Manejo de Paginación AJAX (Recarga Parcial)
+            // ------------------------------------------
+            $('#productos-inventario-contenedor').on('click', '.pagination a', function(e) {
+                e.preventDefault();
+                const url = $(this).attr('href');
+
+                $.get(url, function(data) {
+                    $('#productos-inventario-contenedor').html(data);
+                    $('#filtroInventario').trigger('keyup');
+                });
+            });
+
+            // ------------------------------------------
+            // 2. Función de Filtrado (en la página actual)
+            // ------------------------------------------
+            $('#filtroInventario').on('keyup', function() {
+                const searchText = $(this).val().toLowerCase().trim();
+                const $productos = $('.item-producto-inventario');
+
+                $productos.each(function() {
+                    const $item = $(this);
+                    const nombre = $item.find('.title').text().toLowerCase();
+                    const categoria = $item.find('.item-categoria').text().toLowerCase();
+
+                    if (nombre.includes(searchText) || categoria.includes(searchText)) {
+                        $item.show();
+                    } else {
+                        $item.hide();
+                    }
+                });
+
+                if (searchText.length > 0) {
+                    $('#contenedor-paginacion').hide();
+                } else {
+                    $('#contenedor-paginacion').show();
+                }
+            });
+
+            // ------------------------------------------
+            // 3. Generación de ID Temporal
+            // ------------------------------------------
+            let proximoIdTemporal = -1;
+            function generarIdTemporal() {
+                return proximoIdTemporal--;
+            }
+
+            // ------------------------------------------
+            // 4. Manejo del Formulario: Agregar Ítem Temporal (ID -1 si es Null)
+            // ------------------------------------------
+            $('#form-agregar-item').on('submit', function(e) {
+                e.preventDefault();
+
+                if (!$(this).valid()) {
+                    return;
+                }
+
+                const form = $(this);
+                const data = form.serializeArray();
+                let productoData = {};
+
+                $.each(data, function(_, field) {
+                    const key = field.name.replace('NuevoProducto.', '');
+                    productoData[key] = field.value;
+                });
+
+                const categoriaNombre = form.find('select[name="NuevoProducto.CategoriaId"] option:selected').text();
+                const proveedorNombre = form.find('select[name="NuevoProducto.ProveedorId"] option:selected').text();
+
+                // Usamos -1 si el campo está vacío o no es un número válido.
+                const categoriaId = productoData.CategoriaId ? parseInt(productoData.CategoriaId) : -1;
+                const proveedorId = productoData.ProveedorId ? parseInt(productoData.ProveedorId) : -1;
+
+
+                const nuevoItemTemporal = {
+                    ID_Producto: generarIdTemporal(),
+                    Nombre_Producto: productoData.Nombre_Producto,
+                    Unidad: productoData.Unidad,
+                    Costo_Unitario: parseFloat(productoData.Costo_Unitario || 0),
+                    Cantidad: parseFloat(productoData.Stock_Actual || 1),
+                    Tipo_Movimiento: 'ENTRADA',
+
+                    Stock_Minimo: parseFloat(productoData.Stock_Minimo || 0),
+                    CategoriaId: categoriaId,
+                    ProveedorId: proveedorId,
+
+                    Categoria_Tipo: categoriaNombre !== "Seleccionar Categoría" ? categoriaNombre : 'N/A',
+                    Nombre_Proveedor: proveedorNombre !== "Seleccionar Proveedor" ? proveedorNombre : 'N/A'
+                };
+
+                listaMovimiento.push(nuevoItemTemporal);
+
+                actualizarListaMovimientoUI();
+
+                form[0].reset();
+                $('.select2-basic').val(null).trigger('change');
+            });
+
+            // ------------------------------------------
+            // 5. Manejo del Formulario: Finalizar Movimiento
+            // ------------------------------------------
+            document.getElementById('form-finalizar-movimiento').addEventListener('submit', function(event) {
+                if (listaMovimiento.length === 0) {
+                    // ⭐ REEMPLAZAMOS EL 'alert' NATIVO POR SweetAlert2 ⭐
+                    Swal.fire({
+                        title: 'Lista Vacía',
+                        text: 'Debe seleccionar o agregar al menos un producto para registrar un movimiento.',
+                        icon: 'warning',
+                        confirmButtonText: 'Entendido'
+                    });
+                    event.preventDefault();
+                    return;
+                }
+
+                const tipoMovimientoGlobal = document.getElementById('TipoMovimientoGlobal').value;
+
+                listaMovimiento.forEach(item => {
+                    item.Tipo_Movimiento = tipoMovimientoGlobal;
+                });
+
+                const movimientosJson = JSON.stringify(listaMovimiento);
+
+                document.getElementById('MovimientosJsonInput').value = movimientosJson;
+            });
+
+        }); // Fin de document.ready
+
+        // ==========================================================
+        // Funciones Globales de la Lista Temporal
+        // ==========================================================
+        var listaMovimiento = [];
+        const contenedorListaMovimiento = document.getElementById('lista-movimiento-temporal');
+
+        function agregarProductoParaMovimientoDesdeCard(boton) {
+            const itemCard = boton.closest('.item-seleccionable');
+            const productoId = parseInt(itemCard.getAttribute('data-id'));
+            const nombreProducto = itemCard.getAttribute('data-nombre');
+            const unidadProducto = itemCard.getAttribute('data-unidad');
+            const costoUnitario = parseFloat(itemCard.getAttribute('data-costo'));
+
+            // Lectura de IDs de productos EXISTENTES
+            const rawCategoriaId = itemCard.getAttribute('data-categoria-id');
+            const rawProveedorId = itemCard.getAttribute('data-proveedor-id');
+
+            // Usamos -1 si el atributo no existe, está vacío, o no se puede parsear como número.
+            const categoriaId = (rawCategoriaId && !isNaN(parseInt(rawCategoriaId))) ? parseInt(rawCategoriaId) : -1;
+            const proveedorId = (rawProveedorId && !isNaN(parseInt(rawProveedorId))) ? parseInt(rawProveedorId) : -1;
+
+            const existe = listaMovimiento.some(item => item.ID_Producto === productoId);
+
+            if (!existe) {
+                const nuevoItem = {
+                    ID_Producto: productoId,
+                    Nombre_Producto: nombreProducto,
+                    Unidad: unidadProducto,
+                    Costo_Unitario: costoUnitario,
+                    Cantidad: 1,
+                    Tipo_Movimiento: 'ENTRADA',
+
+                    Stock_Minimo: 0,
+                    CategoriaId: categoriaId,
+                    ProveedorId: proveedorId,
+
+                    Categoria_Tipo: 'N/A',
+                    Nombre_Proveedor: 'N/A'
+                };
+
+                listaMovimiento.push(nuevoItem);
+                actualizarListaMovimientoUI();
+            } else {
+                // ⭐ REEMPLAZAMOS EL 'alert' NATIVO POR SweetAlert2 ⭐
+                Swal.fire({
+                    title: 'Producto Duplicado',
+                    text: `El producto "${nombreProducto}" ya está en la lista.`,
+                    icon: 'info',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+        }
+
+        function eliminarProductoDeMovimiento(productoId) {
+            listaMovimiento = listaMovimiento.filter(item => item.ID_Producto !== productoId);
+            actualizarListaMovimientoUI();
+        }
+
+        function actualizarCantidadMovimiento(productoId, nuevaCantidad) {
+            const cantidadNumerica = parseFloat(nuevaCantidad);
+            const item = listaMovimiento.find(item => item.ID_Producto === productoId);
+
+            if (item && !isNaN(cantidadNumerica) && cantidadNumerica > 0) {
+                item.Cantidad = cantidadNumerica;
+            }
+        }
+
+        // ==========================================================
+        // FUNCIÓN CLAVE CORREGIDA: Renderizado de la lista
+        // ==========================================================
+        function actualizarListaMovimientoUI() {
+            if (!contenedorListaMovimiento) return;
+
+            // 1. Limpiar el contenedor actual
+            contenedorListaMovimiento.innerHTML = '';
+
+            // 2. Mostrar mensaje si la lista está vacía
+            if (listaMovimiento.length === 0) {
+                contenedorListaMovimiento.innerHTML = '<p class="text-muted small p-3">Seleccione o agregue productos para registrar una transacción.</p>';
+                return;
+            }
+
+            // 3. Recorrer la lista y construir el HTML
+            listaMovimiento.forEach(item => {
+                // Asegurar que los valores numéricos existen para usar toFixed
+                const costo = item.Costo_Unitario !== undefined && item.Costo_Unitario !== null ? item.Costo_Unitario : 0;
+                const cantidad = item.Cantidad !== undefined && item.Cantidad !== null ? item.Cantidad : 1;
+
+                // Determinar etiquetas y estilos
+                const isNew = item.ID_Producto < 0 ? ' <span class="badge bg-secondary">Nuevo</span>' : '';
+                const titleClass = item.ID_Producto < 0 ? 'fw-bold' : '';
+
+                const htmlItem = `
+                    <div class="item card p-3 mb-2" data-mov-id="${item.ID_Producto}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="title ${titleClass}">${item.Nombre_Producto}${isNew}</div>
+                                <div class="muted small">${item.Unidad} | C/U: $${costo.toFixed(2)}</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <input type="number"
+                                        value="${cantidad}"
+                                        min="0.01"
+                                        step="0.01"
+                                        class="form-control form-control-sm me-2"
+                                        style="width: 80px;"
+                                        onchange="actualizarCantidadMovimiento(${item.ID_Producto}, this.value)">
+
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="eliminarProductoDeMovimiento(${item.ID_Producto})">
+                                    <span style="font-weight: bold;">X</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                // Insertar el nuevo ítem
+                contenedorListaMovimiento.insertAdjacentHTML('beforeend', htmlItem);
+            });
+        }
+    </script>
+}

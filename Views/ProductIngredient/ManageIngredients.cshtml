@@ -1,0 +1,68 @@
+﻿ @model IngredientInProductsDTO
+@{
+    ViewData["Title"] = "Lista de Ingredientes del Producto";
+}
+
+<div class="container">
+    <h2 class="mb-4">Producto: @Model.productos.Name</h2>
+
+    <div class="mb-3">
+        <strong>Marca:</strong> @Model.productos.Brand <br />
+        <strong>Categoría:</strong> @Model.productos.Category <br />
+        <strong>Precio:</strong> $@Model.productos.Price <br />
+    </div>
+
+    <h4 class="mt-4">Ingredientes Asociados</h4>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Unidad de Medida</th>
+                <th>Fecha de Creación</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ingredients != null && Model.ingredients.Any())
+            {
+                foreach (var item in Model.ingredients)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.UnitOfMeasure</td>
+                        <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="text-center">
+                            <form asp-action="ActualizarMovimiento" method="post" class="d-inline">
+                                <input type="hidden" name="ingredientId" value="@item.Id" />
+                                <input type="hidden" name="productId" value="@Model.productos.Id" />
+                                <input type="hidden" name="concepto" value="Disminuir" />
+                                <button type="submit" class="btn btn-danger btn-sm me-1">
+                                    <i class="bi bi-dash-circle"></i> Disminuir
+                                </button>
+                            </form>
+
+                            <form asp-action="ActualizarMovimiento" method="post" class="d-inline">
+                                <input type="hidden" name="ingredientId" value="@item.Id" />
+                                <input type="hidden" name="productId" value="@Model.productos.Id" />
+                                <input type="hidden" name="concepto" value="Incrementar" />
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="bi bi-plus-circle"></i> Incrementar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted">
+                        <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                        No hay ingredientes registrados para este producto.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,68 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using RestaurantPMS.ViewModels
+@using RestaurantPMS.Models
+
+@model InventarioViewModel
+@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<div class="row g-3" id="contenedor-productos-inventario">
+    @if (Model?.ProductosInventario != null && Model.ProductosInventario.Any())
+    {
+        @foreach (var item in Model.ProductosInventario)
+        {
+            <div class="col-md-6 item-producto-inventario" id="producto-@item.ID_Producto">
+                <div class="item-seleccionable card p-3 h-100"
+                     data-id="@item.ID_Producto"
+                     data-nombre="@item.Nombre_Producto"
+                     data-unidad="@item.Unidad"
+                     data-costo="@item.Costo_Unitario.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                     data-categoria-id="@item.CategoriaId"
+                     data-proveedor-id="@item.ProveedorId">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="title">@item.Nombre_Producto</div>
+                            <div class="muted">
+                                <span class="pill item-categoria">
+                                    <span style="font-size: 1.1em; line-height: 1;">🏷️</span> @item.Categoria_Tipo
+                                </span>
+                            </div>
+                            <div class="muted">@item.CostoFormateado</div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-sm btn-outline-success btn-add-stock"
+                                    onclick="agregarProductoParaMovimientoDesdeCard(this)"
+                                    title="Añadir a la transacción">
+                                <span style="font-weight: bold; font-size: 1.2em;">+</span>
+                            </button>
+                            <div class="qty">@item.StockCompleto</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted ps-3" id="mensaje-inventario-vacio">
+            No hay productos en el inventario o la lista no se ha cargado.
+        </p>
+    }
+</div>
+
+<div class="d-flex justify-content-center mt-4" id="contenedor-paginacion">
+    @if (Model?.ProductosInventario != null && Model.ProductosInventario.PageCount > 1)
+    {
+        @Html.PagedListPager(Model.ProductosInventario, page => Url.Action(actionName, new { page }),
+                new PagedListRenderOptions
+    {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always
+    })
+    }
+</div>
