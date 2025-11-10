@@ -2,7 +2,7 @@
 
 namespace RestaurantPMS.Models
 {
-    public class Tables
+    public class Table
     {
         public int Id { get; set; }
 
