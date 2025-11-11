@@ -51,7 +51,7 @@ namespace RestaurantPMS.Controllers
                 .ToList();
 
             // Mesas reales desde la BD
-            var tables = _context.Tables
+            var tables = _context.Table
                 .Select(t => new TableStatusDto
                 {
                     TableId = t.Id,

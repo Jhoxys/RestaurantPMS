@@ -1,0 +1,33 @@
+﻿@{
+}
+<div class="col">
+    <div class="card-header icon-text">
+        <span class="text-warning me-2">&#9201;</span>
+        <h5>Pendientes (@Model.Pendientes.Count)</h5>
+    </div>
+    @foreach (var orden in Model.Pendientes)
+    {
+        <div class="card custom-card p-4">
+            <div class="card-body card-header-pending">
+                <div class="d-flex justify-content-between">
+                    <h4>@orden.Table?.Name</h4>
+                    <span class="text-muted">@orden.Created.ToShortTimeString()</span>
+                </div>
+                <p>@orden.ClientId</p>
+                <p>
+                    @foreach (var prod in orden.OrderProducts)
+                    {
+                        @($"{prod.Quantity}x {prod.Product.Name}")
+                
+                        <br />
+                    }
+                </p>
+                <form aps-controller= "Orders" asp-action="CambiarEstado" method="post">
+                    <input type="hidden" name="id" value="@orden.Id" />
+                    <input type="hidden" name="nuevoEstado" value="preparando" />
+                    <button class="btn btn-primary w-100 mt-2">Iniciar Preparación</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

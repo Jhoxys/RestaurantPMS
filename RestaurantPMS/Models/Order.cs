@@ -8,7 +8,7 @@
         public int Table_ID { get; set; }
 
         // Prpiedad de navegación
-        public Tables Table { get; set; } = null!;
+        public Table Table { get; set; } = null!;
 
         public DateTime CreatAt { get; set; }
 
@@ -16,7 +16,8 @@
 
         public string ClientId { get; set; } = "";
 
-        public string EmployeeId { get; set; } = "";
+        //public string EmployeeId { get; set; } = "";
+        //public Employee Employee { get; set; } = null!;
 
         public int TableId { get; set; }
 

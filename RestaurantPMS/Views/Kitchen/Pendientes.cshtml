@@ -1,0 +1,46 @@
+﻿@model List<RestaurantPMS.Models.Order>
+
+@{
+    Layout = "_Layout"; // si usas un layout compartido
+}
+
+<head>
+    <meta http-equiv="refresh" content="15" /> <!-- refresca cada 15 segundos -->
+</head>
+
+<div class="container-fluid g-2 pb-lg-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        @foreach (var orden in Model)
+        {
+            <div class="col">
+                <div class="card-header icon-text">
+                    <span class="text-warning me-2" style="font-size: 1.25rem;">&#9201;</span>
+                    <h5 class="mb-0">Pendiente</h5>
+                </div>
+                <div class="card custom-card p-4">
+                    <div class="card-body card-header-pending bg-gradient-warning mb-5">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title card-title-lg mb-1">Mesa @orden.Table?.Id</h4>
+                            <span class="text-muted" style="font-size: 0.85rem;">
+                                @orden.CreatAt.ToString("HH:mm:ss")
+                            </span>
+                        </div>
+                        <p class="card-text mb-2">Cliente: @orden.ClientId</p>
+                        <p class="card-text card-body-content">
+                            @foreach (var prod in orden.OrderProducts)
+                            {
+                                @($"{prod.Quantity}x {prod.Product.Name}")
+                        
+                                <br />
+                            }
+                        </p>
+                        <!-- Sin botones, solo información -->
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

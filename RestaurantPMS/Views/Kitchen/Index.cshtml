@@ -1,0 +1,106 @@
+﻿@model CocinaViewModel
+
+<div class="container-fluid g-2 pb-lg-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <!-- Pendientes -->
+        <div class="col">
+            <div class="card-header icon-text">
+                <span class="text-warning me-2">&#9201;</span>
+                <h5>Pendientes (@Model.Pendientes.Count)</h5>
+            </div>
+            @foreach (var orden in Model.Pendientes)
+            {
+                <div class="card custom-card p-4">
+                    <div class="card-body card-header-pending bg-gradient-warning mb-5">
+                        <div class="d-flex justify-content-between">
+                            <h4>Mesa @orden.Table?.Id</h4>
+                            <span class="text-muted">@orden.CreatAt.ToShortTimeString()</span>
+                        </div>
+                        <p>@orden.ClientId</p>
+                        <p>
+                            @foreach (var prod in orden.OrderProducts)
+                            {
+                                @($"{prod.Quantity}x {prod.Product.Name}")
+                        
+                                <br />
+                            }
+                        </p>
+                        <form asp-controller="Kitchen" asp-action="CambiarEstado" method="post">
+                            <input type="hidden" name="id" value="@orden.Id" />
+                            <input type="hidden" name="nuevoEstado" value="preparando" />
+                            <button class="btn btn-primary w-100 mt-2">Iniciar Preparación</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Preparando -->
+        <div class="col">
+            <div class="card-header icon-text">
+                <span class="text-info me-2">&#9881;</span>
+                <h5>Preparando (@Model.Preparando.Count)</h5>
+            </div>
+            @foreach (var orden in Model.Preparando)
+            {
+                <div class="card custom-card p-4">
+                    <div class="card-body card-header-done text-black">
+                        <div class="d-flex justify-content-between">
+                            <h4>Mesa @orden.Table?.Id</h4>
+                            <span class="text-muted">@orden.CreatAt.ToShortTimeString()</span>
+                        </div>
+                        <p>@orden.ClientId</p>
+                        <p>
+                            @foreach (var prod in orden.OrderProducts)
+                            {
+                                @($"{prod.Quantity}x {prod.Product.Name}")
+                        
+                                <br />
+                            }
+                        </p>
+                        <form asp-controller="Kitchen" asp-action="CambiarEstado" method="post">
+                            <input type="hidden" name="id" value="@orden.Id" />
+                            <input type="hidden" name="nuevoEstado" value="listo" />
+                            <button class="btn btn-secondary w-100 mt-2">Marcar como Listo</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Listos -->
+        <div class="col">
+            <div class="card-header icon-text">
+                <span class="text-success me-2">&#10003;</span>
+                <h5>Listos (@Model.Listos.Count)</h5>
+            </div>
+            @foreach (var orden in Model.Listos)
+            {
+                <div class="card custom-card p-4">
+                    <div class="card-body card-header-done">
+                        <div class="d-flex justify-content-between">
+                            <h4>Mesa @orden.Table?.Id</h4>
+                            <span class="text-muted">@orden.CreatAt.ToShortTimeString()</span>
+                        </div>
+                        <p>@orden.ClientId</p>
+                        <p>
+                            @foreach (var prod in orden.OrderProducts)
+                            {
+                                @($"{prod.Quantity}x {prod.Product.Name}")
+                        
+                                <br />
+                            }
+                        </p>
+                        <form asp-controller="Kitchen" asp-action="CambiarEstado" method="post">
+                            <input type="hidden" name="id" value="@orden.Id" />
+                            <input type="hidden" name="nuevoEstado" value="entregado" />
+                            <button class="btn btn-success w-100 mt-2">Marcar como Entregado</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
